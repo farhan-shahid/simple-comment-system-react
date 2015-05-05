@@ -1,5 +1,5 @@
 
-var CommentsBox = React.createClass({
+var CommentsBox = React.createClass({displayName: "CommentsBox",
 
   getInitialState: function(){
   
@@ -25,18 +25,18 @@ var CommentsBox = React.createClass({
   render: function(){
   
     return(
-      <div>
-        <h1>Comments Box!</h1>
-        <CommentsList data={this.state.data}/>
-        <CommentForm submitComment={this.submitCommentHandler}/>
-      </div>
+      React.createElement("div", null, 
+        React.createElement("h1", null, "Comments Box!"), 
+        React.createElement(CommentsList, {data: this.state.data}), 
+        React.createElement(CommentForm, {submitComment: this.submitCommentHandler})
+      )
     );
     
   }
 
 });
 
-var CommentsList = React.createClass({
+var CommentsList = React.createClass({displayName: "CommentsList",
   
   render: function(){
   
@@ -47,21 +47,21 @@ var CommentsList = React.createClass({
           i++;
           
           return(
-            <Comment fill={i%2} author={comment.author}>{comment.text}</Comment>
+            React.createElement(Comment, {fill: i%2, author: comment.author}, comment.text)
           );
     });
   
     return(
 
-      <div>
-        {comments}
-      </div>
+      React.createElement("div", null, 
+        comments
+      )
     );
   }
 
 });
 
-var Comment = React.createClass({
+var Comment = React.createClass({displayName: "Comment",
   
   render: function(){
     
@@ -76,15 +76,15 @@ var Comment = React.createClass({
     }
     
     return(
-      <div className={cssClasses}>
-        <p>{this.props.author}:</p><p>{this.props.children}</p>
-      </div> 
+      React.createElement("div", {className: cssClasses}, 
+        React.createElement("p", null, this.props.author, ":"), React.createElement("p", null, this.props.children)
+      ) 
     );
   }
 
 });
 
-var CommentForm = React.createClass({
+var CommentForm = React.createClass({displayName: "CommentForm",
 
   getInitialState: function(){
     
@@ -126,14 +126,14 @@ var CommentForm = React.createClass({
   render: function(){
   
     return(
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" placeholder="Your name" ref="name" />
-          <input type="text" placeholder="Say something..." ref="text"/>
-          <input type="submit" value="Post" />
-        </form>
-        <p className={this.state.cantSubmit ? "errortext":"errortexthidden"} ref="errorText">Name or comment field cannot be empty</p>
-      </div>
+      React.createElement("div", null, 
+        React.createElement("form", {onSubmit: this.handleSubmit}, 
+          React.createElement("input", {type: "text", placeholder: "Your name", ref: "name"}), 
+          React.createElement("input", {type: "text", placeholder: "Say something...", ref: "text"}), 
+          React.createElement("input", {type: "submit", value: "Post"})
+        ), 
+        React.createElement("p", {className: this.state.cantSubmit ? "errortext":"errortexthidden", ref: "errorText"}, "Name or comment field cannot be empty")
+      )
     );
   }
 
@@ -147,6 +147,6 @@ var json = [{author:"Jak", text:"This is a comment"},
 
 
 React.render(
-  <CommentsBox data={json}/>,
+  React.createElement(CommentsBox, {data: json}),
   document.getElementById("comment-system")
 );
