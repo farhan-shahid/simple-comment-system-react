@@ -1,0 +1,23 @@
+/*add more styling!*/
+/*notice how I am not usig IDs at all*/
+
+.comment{
+  
+  border-style: solid;
+  border-color: pink;
+}
+
+.fillcomment{
+  
+  background-color: mistyrose;
+}
+
+.errortexthidden{
+
+  visibility: hidden;
+}
+
+.errortext{
+  
+  color: red;
+}
